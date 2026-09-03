@@ -1,407 +1,259 @@
-import { Link } from 'react-router-dom'
-
-import Navbar from '../components/Navbar'
-import ProductCard from '../components/ProductCard'
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import ProductCard from "../components/ProductCard";
+import products from "../data/products";
 
 function Home() {
-
-  const products = [
-    {
-      name: 'Spanish Latte',
-      category: 'COFFEE',
-      description: 'Espresso, susu creamy, dan rasa manis yang lembut.',
-      price: 'Rp23.000',
-      image: '/images/products/Spanish Latte.jpg',
-    },
-    {
-      name: 'Hazelnut Latte',
-      category: 'COFFEE',
-      description: 'Espresso dengan susu dan aroma hazelnut yang nikmat.',
-      price: 'Rp22.000',
-      image: '/images/products/Hazelnut Latte.jpg',
-    },
-    {
-      name: 'Iced Americano',
-      category: 'COFFEE',
-      description: 'Espresso dingin yang fresh dengan rasa kopi yang kuat.',
-      price: 'Rp17.000',
-      image: '/images/products/Iced Americano.jpg',
-    },
-    {
-      name: 'Matcha Latte',
-      category: 'NON COFFEE',
-      description: 'Matcha creamy dengan rasa earthy yang lembut.',
-      price: 'Rp22.000',
-      image: '/images/products/Matcha Latte.jpg',
-    },
-  ]
+  const categories = [
+    { icon: "🍔", name: "Makanan" },
+    { icon: "🥤", name: "Minuman" },
+    { icon: "👕", name: "Fashion" },
+    { icon: "💍", name: "Aksesoris" },
+    { icon: "💄", name: "Kecantikan" },
+    { icon: "🎁", name: "Lainnya" },
+  ];
 
   return (
-    <div className="home">
-
+    <>
       <Navbar />
 
-      {/* HERO */}
-      <section className="hero">
+      <main>
+        {/* HERO */}
+        <section className="hero-marketplace" id="beranda">
+          <div className="hero-decoration decoration-one"></div>
+          <div className="hero-decoration decoration-two"></div>
 
-        <div className="hero-content">
+          <div className="hero-content">
+            <div className="hero-badge">
+              ✨ Marketplace UMKM Indonesia
+            </div>
 
-          <p className="hero-label">
-            ☕ SPECIALTY COFFEE & GOOD MOMENTS
-          </p>
+            <h1>
+              Belanja Produk Lokal,
+              <span> Dukung UMKM Indonesia.</span>
+            </h1>
 
-          <h1>
-            Start Your Day
-            <br />
-            With <span>Good Coffee.</span>
-          </h1>
+            <p>
+              Temukan berbagai produk pilihan dari UMKM lokal.
+              Mulai dari makanan, fashion, aksesoris, hingga
+              berbagai produk unik lainnya.
+            </p>
 
-          <p className="hero-description">
-            Nikmati kopi pilihan dan berbagai menu favorit
-            dalam suasana cafe yang nyaman dan hangat.
-          </p>
+            <div className="hero-buttons">
+              <a href="#produk" className="hero-button">
+                Mulai Belanja →
+              </a>
 
-          <div className="hero-buttons">
+              <a href="#toko" className="hero-secondary">
+                Jelajahi Toko
+              </a>
+            </div>
 
-            <Link to="/menu" className="primary-button">
-              Explore Menu →
+            <div className="hero-info">
+              <div>
+                <strong>100+</strong>
+                <span>Produk UMKM</span>
+              </div>
+
+              <div>
+                <strong>50+</strong>
+                <span>Toko Lokal</span>
+              </div>
+
+              <div>
+                <strong>4.9 ★</strong>
+                <span>Rating Pelanggan</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <div className="visual-card card-one">
+              <span>🏪</span>
+
+              <div>
+                <strong>Toko Lokal</strong>
+                <small>Produk Pilihan</small>
+              </div>
+            </div>
+
+            <div className="visual-main">
+              <span className="shopping-bag">🛍️</span>
+            </div>
+
+            <div className="visual-card card-two">
+              <span>📦</span>
+
+              <div>
+                <strong>Banyak Produk</strong>
+                <small>Beragam Kategori</small>
+              </div>
+            </div>
+
+            <div className="discount-bubble">
+              <strong>DISKON</strong>
+              <span>hingga 30%</span>
+            </div>
+          </div>
+        </section>
+
+        {/* KATEGORI */}
+        <section className="section" id="kategori">
+          <div className="section-title">
+            <div>
+              <p className="section-label">
+                JELAJAHI PRODUK
+              </p>
+
+              <h2>Kategori Pilihan</h2>
+            </div>
+          </div>
+
+          <div className="category-grid">
+            {categories.map((category) => (
+              <Link
+                to={`/kategori/${encodeURIComponent(category.name)}`}
+                className="category-card"
+                key={category.name}
+              >
+                <div className="category-icon">
+                  {category.icon}
+                </div>
+
+                <h3>{category.name}</h3>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* PRODUK */}
+        <section
+          className="section products-section"
+          id="produk"
+        >
+          <div className="section-title">
+            <div>
+              <p className="section-label">
+                PRODUK TERPOPULER
+              </p>
+
+              <h2>Produk Pilihan Untukmu</h2>
+            </div>
+
+            <Link to="/produk" className="see-all">
+              Lihat Semua →
             </Link>
-
-            <a href="#about" className="secondary-button">
-              Our Story
-            </a>
-
           </div>
 
-          <div className="hero-info">
+          <div className="product-grid">
+            {products.slice(0, 6).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+        </section>
 
+        {/* PROMO */}
+        <section className="promo-section" id="promo">
+          <div className="promo-content">
             <div>
-              <strong>4.9</strong>
-              <span>Customer Rating</span>
+              <p>🔥 PROMO SPESIAL</p>
+
+              <h2>
+                Belanja Lebih Hemat,
+                <br />
+                Dukung UMKM Lokal!
+              </h2>
+
+              <span>
+                Temukan berbagai produk pilihan dengan
+                penawaran menarik dari UMKM Indonesia.
+              </span>
+
+              <a href="#produk" className="promo-button">
+                Lihat Promo →
+              </a>
             </div>
 
-            <div>
-              <strong>8+</strong>
-              <span>Menu Pilihan</span>
+            <div className="promo-visual">
+              🛒
             </div>
+          </div>
+        </section>
 
+        {/* TOKO */}
+        <section className="store-section" id="toko">
+          <div className="section-title">
             <div>
-              <strong>100%</strong>
-              <span>Fresh Coffee</span>
-            </div>
+              <p className="section-label">
+                TOKO UMKM
+              </p>
 
+              <h2>Jelajahi Toko Pilihan</h2>
+            </div>
           </div>
 
-        </div>
+          <div className="store-grid">
+            <div className="store-card">
+              <div className="store-icon">🍪</div>
 
+              <h3>UMKM Nusantara</h3>
 
-        <div className="hero-image-wrapper">
+              <p>
+                Aneka makanan dan camilan lokal
+                berkualitas.
+              </p>
 
-          <div className="hero-decoration"></div>
-
-          {/* FOTO HERO ASLI KAMU */}
-          <img
-            src="/images/hero/hero-coffee.jpg"
-            alt="BREWORA Coffee"
-            className="hero-image"
-          />
-
-          <div className="rating-card">
-
-            <span className="rating-star">
-              ⭐
-            </span>
-
-            <div>
-              <strong>4.9 / 5.0</strong>
-              <small>Customer Rating</small>
+              <span>12 Produk</span>
             </div>
 
+            <div className="store-card">
+              <div className="store-icon">🎨</div>
+
+              <h3>Creative Store</h3>
+
+              <p>
+                Produk kreatif dan unik buatan
+                pengrajin lokal.
+              </p>
+
+              <span>25 Produk</span>
+            </div>
+
+            <div className="store-card">
+              <div className="store-icon">✨</div>
+
+              <h3>Local Handmade</h3>
+
+              <p>
+                Berbagai produk handmade pilihan.
+              </p>
+
+              <span>18 Produk</span>
+            </div>
           </div>
+        </section>
 
-        </div>
-
-      </section>
-
-
-      {/* ABOUT */}
-      <section className="about-section" id="about">
-
-        <div className="about-image">
-
-          {/* FOTO INTERIOR ASLI KAMU */}
-          <img
-            src="/images/cafe/cafe-interior.jpg"
-            alt="BREWORA Cafe Interior"
-          />
-
-          <div className="about-floating-card">
-            <strong>Since 2026</strong>
-            <span>Good coffee, good moments.</span>
+        {/* FOOTER */}
+        <footer>
+          <div className="footer-logo">
+            UMKM<span>Mart</span>
           </div>
-
-        </div>
-
-
-        <div className="about-content">
-
-          <p className="section-label">
-            OUR STORY
-          </p>
-
-          <h2>
-            More Than Just
-            <br />
-            <span>A Cup of Coffee.</span>
-          </h2>
 
           <p>
-            BREWORA hadir untuk menemani berbagai
-            momen sederhana dalam keseharianmu.
+            Marketplace sederhana untuk mendukung
+            dan memperkenalkan produk UMKM Indonesia.
           </p>
 
-          <p>
-            Mulai dari ngobrol bersama teman,
-            mengerjakan tugas, sampai menikmati
-            kopi sendirian.
-          </p>
-
-          <Link to="/menu" className="text-button">
-            Discover Our Menu →
-          </Link>
-
-        </div>
-
-      </section>
-
-
-      {/* BEST SELLER */}
-      <section className="menu-section">
-
-        <div className="section-heading">
-
-          <div>
-
-            <p className="section-label">
-              OUR FAVORITES
-            </p>
-
-            <h2>
-              Best Seller
-            </h2>
-
-            <p className="section-subtitle">
-              Pilihan favorit untuk menemani hari-harimu.
-            </p>
-
+          <div className="footer-bottom">
+            © 2026 UMKMMart. All Rights Reserved.
           </div>
-
-          <Link to="/menu" className="see-all">
-            Lihat Semua →
-          </Link>
-
-        </div>
-
-
-        <div className="menu-grid">
-
-          {products.map((product) => (
-            <ProductCard
-              key={product.name}
-              product={product}
-            />
-          ))}
-
-        </div>
-
-      </section>
-
-
-      {/* WHY BREWORA */}
-      <section className="why-section">
-
-        <div className="section-heading centered">
-
-          <p className="section-label">
-            WHY BREWORA?
-          </p>
-
-          <h2>
-            Made For Your Moments
-          </h2>
-
-        </div>
-
-
-        <div className="why-grid">
-
-          <div className="why-card">
-
-            <div className="why-icon">
-              ☕
-            </div>
-
-            <h3>
-              Quality Coffee
-            </h3>
-
-            <p>
-              Menggunakan bahan berkualitas untuk
-              menghasilkan rasa kopi yang nikmat.
-            </p>
-
-          </div>
-
-
-          <div className="why-card">
-
-            <div className="why-icon">
-              ✨
-            </div>
-
-            <h3>
-              Cozy Place
-            </h3>
-
-            <p>
-              Tempat nyaman untuk ngobrol, belajar,
-              bekerja, atau bersantai.
-            </p>
-
-          </div>
-
-
-          <div className="why-card">
-
-            <div className="why-icon">
-              🤎
-            </div>
-
-            <h3>
-              Good Moments
-            </h3>
-
-            <p>
-              Secangkir kopi untuk menemani
-              momen yang berkesan.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* LOCATION */}
-      <section className="cafe-section" id="location">
-
-        <div className="cafe-content">
-
-          <p className="section-label">
-            VISIT BREWORA
-          </p>
-
-          <h2>
-            Your Favorite Place
-            <br />
-            To <span>Slow Down.</span>
-          </h2>
-
-          <p>
-            Datang dan nikmati secangkir kopi dalam
-            suasana cafe yang nyaman untuk bekerja,
-            ngobrol, belajar, atau sekadar bersantai.
-          </p>
-
-
-          <div className="cafe-details">
-
-            <div>
-              <span>📍</span>
-
-              <div>
-                <strong>Location</strong>
-                <p>Salatiga, Jawa Tengah</p>
-              </div>
-            </div>
-
-
-            <div>
-              <span>🕐</span>
-
-              <div>
-                <strong>Opening Hours</strong>
-                <p>08.00 - 22.00 WIB</p>
-              </div>
-            </div>
-
-          </div>
-
-          <Link to="/menu" className="primary-button">
-            Order Now →
-          </Link>
-
-        </div>
-
-
-        <div className="cafe-image">
-
-          {/* FOTO EXTERIOR ASLI KAMU */}
-          <img
-            src="/images/cafe/cafe-exterior.jpg"
-            alt="BREWORA Cafe Exterior"
-          />
-
-        </div>
-
-      </section>
-
-
-      {/* FOOTER */}
-      <footer className="footer">
-
-        <div className="footer-brand">
-
-          <h3>
-            ☕ BREW<span>ORA</span>
-          </h3>
-
-          <p>
-            Good coffee, good moments.
-          </p>
-
-        </div>
-
-
-        <div className="footer-links">
-
-          <Link to="/">
-            Home
-          </Link>
-
-          <a href="/#about">
-            About
-          </a>
-
-          <Link to="/menu">
-            Menu
-          </Link>
-
-          <a href="/#location">
-            Location
-          </a>
-
-        </div>
-
-        <p className="copyright">
-          © 2026 BREWORA. All rights reserved.
-        </p>
-
-      </footer>
-
-    </div>
-  )
+        </footer>
+      </main>
+    </>
+  );
 }
 
-export default Home
+export default Home;

@@ -1,56 +1,64 @@
+import { Link } from "react-router-dom";
+
 function ProductCard({ product }) {
+  const discountedPrice =
+    product.discount > 0
+      ? product.price -
+        (product.price * product.discount) / 100
+      : product.price;
+
   return (
-    <article className="menu-card">
+    <Link
+      to={`/produk/${encodeURIComponent(product.name)}`}
+      className="product-card"
+    >
+      <div className="product-image">
+        {product.discount > 0 && (
+          <span className="discount-label">
+            -{product.discount}%
+          </span>
+        )}
 
-      <div className="menu-image">
-
-        <img
-          src={product.image}
-          alt={product.name}
-        />
-
-        <button
-          className="favorite-button"
-          aria-label={`Favorite ${product.name}`}
-        >
-          ♡
-        </button>
-
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+          />
+        ) : (
+          <div className="product-placeholder">
+            📦
+          </div>
+        )}
       </div>
 
-      <div className="menu-content">
-
-        <span className="menu-category">
+      <div className="product-info">
+        <p className="product-category">
           {product.category}
-        </span>
-
-        <h3>
-          {product.name}
-        </h3>
-
-        <p>
-          {product.description}
         </p>
 
-        <div className="menu-bottom">
+        <h3>{product.name}</h3>
 
-          <strong>
-            {product.price}
-          </strong>
+        {product.discount > 0 && (
+          <p className="original-price">
+            Rp {product.price.toLocaleString("id-ID")}
+          </p>
+        )}
 
-          <button
-            className="add-button"
-            aria-label={`Add ${product.name}`}
-          >
-            +
-          </button>
+        <p className="product-price">
+          Rp {discountedPrice.toLocaleString("id-ID")}
+        </p>
 
+        <div className="product-bottom">
+          <span>⭐ {product.rating}</span>
+          <span>{product.sold} terjual</span>
         </div>
 
+        <div className="product-store">
+          🏪 {product.store}
+        </div>
       </div>
-
-    </article>
-  )
+    </Link>
+  );
 }
 
-export default ProductCard
+export default ProductCard;
