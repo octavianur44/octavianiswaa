@@ -47,6 +47,51 @@ function ProductDetail() {
         (product.price * product.discount) / 100
       : product.price;
 
+  // TAMBAH PRODUK KE CART
+  const tambahKeCart = () => {
+    // Ambil cart yang sudah ada
+    const cart = JSON.parse(
+      localStorage.getItem("cart")
+    ) || [];
+
+    // Cari apakah produk sudah ada
+    const existingProduct = cart.find(
+      (item) => item.id === product.id
+    );
+
+    let updatedCart;
+
+    if (existingProduct) {
+      // Kalau sudah ada, tambah jumlahnya
+      updatedCart = cart.map((item) =>
+        item.id === product.id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item
+      );
+    } else {
+      // Kalau belum ada, masukkan produk baru
+      updatedCart = [
+        ...cart,
+        {
+          ...product,
+          price: discountedPrice,
+          quantity: 1,
+        },
+      ];
+    }
+
+    // Simpan ke localStorage
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(updatedCart)
+    );
+
+    alert(`${product.name} berhasil ditambahkan ke keranjang!`);
+  };
+
   return (
     <>
       <Navbar />
@@ -127,7 +172,10 @@ function ProductDetail() {
             {/* TOMBOL */}
             <div className="detail-actions">
 
-              <button className="add-cart">
+              <button
+                className="add-cart"
+                onClick={tambahKeCart}
+              >
                 🛒 Tambah Keranjang
               </button>
 
@@ -145,3 +193,4 @@ function ProductDetail() {
 }
 
 export default ProductDetail;
+
